@@ -29,4 +29,5 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Run build with Gradle Wrapper
-      run: ./fetcher/gradlew build
+      working-directory: ./fetcher/
+      run: ./gradlew build
