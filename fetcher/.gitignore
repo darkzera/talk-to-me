@@ -173,3 +173,5 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+*pocs/*
+/src/main/java/pocs/
