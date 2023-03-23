@@ -1,4 +1,4 @@
-package com.darkzera.fetcher.config;
+package com.darkzera.fetcher.config.database;
 
 import java.sql.Types;
 
