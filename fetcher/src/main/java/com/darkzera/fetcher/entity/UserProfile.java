@@ -30,13 +30,13 @@ public class UserProfile {
     @Enumerated(EnumType.STRING)
     private AuthSupplier authSupplier;
 
-//    @ElementCollection
+    @ElementCollection
     @CollectionTable(name = "top10Genres", joinColumns = @JoinColumn(name = "users"))
     @Column(name = "valor")
     private Set<String>top10Genres;
 
 
-//    @ElementCollection
+    @ElementCollection
     @CollectionTable(name = "musicalArtists", joinColumns = @JoinColumn(name = "users"))
     @Column(name = "valor")
     private Set<String> musicalArtists;

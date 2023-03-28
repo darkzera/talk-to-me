@@ -44,11 +44,28 @@ public class UserSearchService {
      */
     public SearchArtistByNameDTO searchArtistByName(@NotNull String artistName){
 
-        final var artists = (List<ArtistData>) spotifyClientImplementation.findArtistByName(artistName);
+        final List<ArtistData>artists = spotifyClientImplementation.findArtistByName(artistName);
+
+        if (artists.isEmpty()){
+            /* Verificar se a propria lib ja nao valida esse caso
+                - Aparentemente ele retorna alguma coisa q se pareca com a String passada, tipo um match interno
+                - 'E importante garantir que o primeiro valor seja, necessariamente, o melhor match.
+                - Garantir que seja o match da pesquisa
+                    -> Se nao for, o principalArtist pode (?) vir nulo e tudo como sugestao
+                    -> Caso seja assim, quebra alguam convencao ou norma?
+                - Provavelmente a API sempre retorna alguma sugestao
+
+                - Restricoes do Fetcher:
+                    -> TooManyChars
+             */
+        }
+
         final List<ArtistData> artistDataList = extractOnlyExactlyMatches(artists, artistName);
+
         final ArtistData principalArtist = artistDataList.stream()
                 .filter(art -> art.getName().equalsIgnoreCase(artistName))
                 .findFirst().orElseThrow();
+
         artistDataList.remove(principalArtist);
 
         final Set<String> genres = extractGenresForEntireCollection(artistDataList);
