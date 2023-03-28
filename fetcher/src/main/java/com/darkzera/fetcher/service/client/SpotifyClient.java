@@ -1,11 +1,13 @@
 package com.darkzera.fetcher.service.client;
 
+import com.darkzera.fetcher.entity.dto.ArtistData;
+
 import java.util.List;
 
 public interface SpotifyClient {
 
 
-    List<?> findArtistByName(String artistName);
+    List<ArtistData> findArtistByName(String artistName);
 
 
 }
