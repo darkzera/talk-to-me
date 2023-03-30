@@ -1,39 +1,60 @@
 package com.darkzera.fetcher.config;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.DefaultSecurityFilterChain;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@EnableOAuth2Client
+//@Configuration
+//@EnableWebSecurity
 public class ResourceTokenConfiguration {
 
-//    private final OAuth2UserService oAuth2UserService;
-//
-//    public ResourceTokenConfiguration(OAuth2UserService oAuth2UserService) {
-//        this.oAuth2UserService = oAuth2UserService;
-//    }
+    @Autowired
+    private OidcUserService userService;
 
-    @SneakyThrows
+
     @Bean
-    public DefaultSecurityFilterChain httpSecurity(final HttpSecurity http){
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        return http
+//                .oauth2Login(oauth2Login ->
+//                        oauth2Login.redirectionEndpoint(redirectionEndpoint ->
+//                                redirectionEndpoint.baseUri("/login/oauth2/callback/*")))
+                .oauth2Login(oauth2Login ->
+                        oauth2Login.loginPage("/login/oauth2"))
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .oauth2ResourceServer().jwt().and().and()
+//                .cors().and().cors().disable()
+//                .build();
 
 
-        return http.authorizeRequests()
-                .antMatchers("/**").fullyAuthenticated()
-                .and()
+//                .authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/", "/error", "/webjars/**").permitAll()
+//                .antMatchers("/auth").authenticated()
+//                .anyRequest().permitAll()
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .oauth2Login().userInfoEndpoint().userService(oAuth2UserService).and().and()
                 .oauth2ResourceServer().jwt()
                 .and().and()
+                .oauth2Login()
+                .and()
+                .oauth2Client()
+                .and()
                 .cors().and().csrf().disable()
+                .formLogin().and()
                 .build();
+
+
     }
+
 }

@@ -5,43 +5,43 @@ import com.darkzera.fetcher.dto.OAuth2UserDataFactory;
 import com.darkzera.fetcher.repository.UserRepository;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 @Service
-//public class OAuth2UserService extends DefaultOAuth2UserService {
-public class OAuth2UserService implements org.springframework.security.oauth2.client.userinfo.OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class OAuth2UserService extends OidcUserService {
+
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
+    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
 
-        try {
-            return null;
-//            return processOAuth2User(oAuth2UserRequest, oAuth2User);
-        } catch (AuthenticationException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
-            throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
-        }
-    }
+        OAuth2User user = super.loadUser(userRequest);
 
+        Map<String, Object> attributes = user.getAttributes();
+        Set<GrantedAuthority> authorities = new HashSet<>(user.getAuthorities());
 
-    private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
+        var userInfo = OAuth2UserDataFactory.getOAuth2UserInfo(
+                userRequest.getClientRegistration().getRegistrationId(),
+                user.getAttributes());
 
-        final OAuth2UserData oAuth2UserData = OAuth2UserDataFactory.getOAuth2UserInfo(
-                oAuth2UserRequest.getClientRegistration().getRegistrationId(),
-                oAuth2User.getAttributes());
+        authorities.add(new SimpleGrantedAuthority("GoogleUSER"));
 
-        if (StringUtils.isEmpty(oAuth2UserData.getEmail())) {
-            throw new RuntimeException("Email not found from OAuth2 provider");
-        }
-
-        return oAuth2User;
+        return new DefaultOidcUser(authorities, userRequest.getIdToken());
     }
 
 }

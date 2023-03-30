@@ -19,9 +19,9 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2021.0.6")
+	set('springCloudVersion',"2021.0.6")
+	set('authVersion', "5.7.7")
 }
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -41,12 +41,33 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
-	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-client
-	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.6.10'
-	implementation 'org.springframework.security.oauth:spring-security-oauth2:2.5.1.RELEASE'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+//	implementation 'org.springframework.security.oauth:spring-security-oauth2'
+//	implementation 'org.springframework.security.oauth:spring-security-oauth2-client'
+//	implementation 'org.springframework.security:spring-security-oauth2-jose'
+
+//	implementation "org.springframework.security:spring-security-oauth2-resource-server:${authVersion}"
+//	implementation "org.springframework.boot:spring-boot-starter-security:${authVersion}"
+//	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.7'
+
+//	implementation 'org.springframework.security:spring-security-oauth2-client:5.7.7'
+	implementation 'org.springframework.security:spring-security-oauth2-client:5.7.6'
+	implementation 'org.springframework.security:spring-security-oauth2-core:5.7.7'
+	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.7'
+	implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.7.7'
+//	implementation 'org.springframework.security.oauth:spring-security-oauth2-autoconfigure'
+	implementation "org.springframework.cloud:spring-cloud-config-client"
+
+	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.7.7'
+	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server', version: '5.7.7'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.9'
+
+	implementation 'org.springframework.security:spring-security-config:5.7.7'
+
 
 }
-
 
 dependencyManagement {
 	imports {
@@ -56,10 +77,4 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-allprojects {
-	repositories {
-		maven { url 'https://jitpack.io' }
-	}
 }
