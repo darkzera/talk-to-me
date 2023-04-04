@@ -13,6 +13,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.SecurityFilterChain;
 
+// Desabilitado
 //@Configuration
 //@EnableWebSecurity
 public class ResourceTokenConfiguration {
@@ -25,23 +26,6 @@ public class ResourceTokenConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
-//                .oauth2Login(oauth2Login ->
-//                        oauth2Login.redirectionEndpoint(redirectionEndpoint ->
-//                                redirectionEndpoint.baseUri("/login/oauth2/callback/*")))
-                .oauth2Login(oauth2Login ->
-                        oauth2Login.loginPage("/login/oauth2"))
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .oauth2ResourceServer().jwt().and().and()
-//                .cors().and().cors().disable()
-//                .build();
-
-
-//                .authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/", "/error", "/webjars/**").permitAll()
-//                .antMatchers("/auth").authenticated()
-//                .anyRequest().permitAll()
-
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .oauth2ResourceServer().jwt()

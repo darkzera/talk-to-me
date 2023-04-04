@@ -6,6 +6,7 @@ import com.darkzera.fetcher.entity.dto.SearchArtistByNameDTO;
 import com.darkzera.fetcher.repository.UserRepository;
 import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
 import com.sun.istack.NotNull;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
 
