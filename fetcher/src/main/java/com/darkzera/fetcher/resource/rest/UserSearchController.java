@@ -29,20 +29,28 @@ public class UserSearchController {
 
     @GetMapping("/includeMusicArtist/{name}")
     public ResponseEntity<?> includeMusicArtistByName(@PathVariable String name){
+        var t = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         var response = userSearchService.includeMusicArtistInProfileByName(name);
 
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/testDB")
-    public ResponseEntity<?> verifyDBTable(){
-        return ResponseEntity.ok(userSearchService.testDatabase());
+
+    @GetMapping("/")
+    public ResponseEntity<?> just(){
+        OAuth2User user = getCurrentUser();
+        StringBuffer authorities = new StringBuffer();
+        user.getAuthorities().forEach((a) -> authorities.append(a.toString()).append(","));
+        return ResponseEntity.ok(
+                "Hello " + user.getAttributes().get("name") + ". Your email is " + user.getAttributes().get("email")
+                + " and your profile picture is <img src='"+user.getAttributes().get("picture")+"' /> <br />"
+                + "You have the following attributes: " + authorities.toString() + "<br />"
+                + "<a href='/logout'>logout</a>");
     }
 
-    @GetMapping("/userInfo")
-    public ResponseEntity<?> getUserAbout(){
-       return ResponseEntity.ok(userAuthenticationService.processUserProfile());
+
+    public OAuth2User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return ((OAuth2AuthenticationToken)auth).getPrincipal();
     }
-
-
 }
