@@ -8,6 +8,7 @@ import com.darkzera.fetcher.entity.enumerator.AuthSupplier;
 import com.darkzera.fetcher.repository.UserRepository;
 import com.darkzera.fetcher.service.client.SpotifyClient;
 import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
+import com.darkzera.fetcher.service.exception.UserCannotBeFoundInDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Spotify user include artist to profile - Include spotify artist to user profile - use case service")
 public class UserSearchServiceTest {
 
 
@@ -72,7 +74,7 @@ public class UserSearchServiceTest {
         return userProfile;
     }
     @Test
-    @DisplayName("Given valid band/artist name it shuold sucessfully return it with applied rules and return as our business model")
+    @DisplayName("Given valid band/artist name it shuold sucessfully it with applied rules and return as our business model")
     public void t1() {
         final String SEARCH_NAME = "Sator Arepo";
 
@@ -92,6 +94,7 @@ public class UserSearchServiceTest {
         when(userRepository.save(any())).thenReturn(userProfile);
 
         var actualResult = userSearchService.includeMusicArtistInProfileByName("Sator Arepo");
+
         assertNotNull(actualResult);
 
         assertNotEquals("Suggestions shuld not be empty", 0, actualResult.getSuggestions().size());
@@ -101,6 +104,29 @@ public class UserSearchServiceTest {
 
         assertEquals("Principal artist name shuold match to given input",
                 SEARCH_NAME, actualResult.getFoundArtist().getName());
+    }
+
+    @Test
+    @DisplayName("Given valid input it shuold fail to find user by email and throw customized exception")
+    public void t3(){
+        final String SEARCH_NAME = "Sator Arepo";
+
+        List<ArtistData> artistFakeList_ = ArtistDataBuilder
+                .fromNames("Metallica", "Sator Arepo", "Sator Arepo Tenet Opera")
+                .withGenresInOrder("Thrash Metal", "Darkzera", "AluciDommed")
+                .buildRestrictedList();
+
+        var userProfile = buildDefaultUserProfile();
+
+
+        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
+
+        when(userAuthenticationService.getCurrentUserEmail()).thenReturn(userProfile.getEmail());
+
+        when(userRepository.findUserProfileByEmail(anyString())).thenThrow(UserCannotBeFoundInDatabase.class);
+        when(userRepository.save(any())).thenReturn(userProfile);
+
+
     }
 
     @Test

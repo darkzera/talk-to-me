@@ -5,6 +5,7 @@ import com.darkzera.fetcher.entity.dto.ArtistData;
 import com.darkzera.fetcher.entity.dto.SearchArtistByNameDTO;
 import com.darkzera.fetcher.repository.UserRepository;
 import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
+import com.darkzera.fetcher.service.exception.UserCannotBeFoundInDatabase;
 import com.sun.istack.NotNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -30,36 +31,9 @@ public class UserSearchService {
         this.userAuthenticationService = userAuthenticationService;
     }
 
-    /* TODO
-        Abstrair a conversao pro modelo de negocio dentro da
-        Refatorar modelo de interface do Spotify. Nao tratar construcao de modelos na camada de business
-        Acho que podemos criar um builder com algum parametro p identificar o tipo de construcao
-            - Novo candidato p. modelo logico do negocio:
-        {
-            string searchName: Black Sabbath
-            ARTIST_BUSINESSMODEL artistFound: Black Sabbath ->
-            List<ARTIST_BUSINESSMODEL> sugestoes aplicáveis "black sabbath cover, black sabado, black tirico tico"
-            generos
-        }
-
-     */
     public SearchArtistByNameDTO searchArtistByName(@NotNull String artistName){
 
         final List<ArtistData>artists = spotifyClientImplementation.findArtistByName(artistName);
-
-        if (artists.isEmpty()){
-            /* Verificar se a propria lib ja nao valida esse caso
-                - Aparentemente ele retorna alguma coisa q se pareca com a String passada, tipo um match interno
-                - 'E importante garantir que o primeiro valor seja, necessariamente, o melhor match.
-                - Garantir que seja o match da pesquisa
-                    -> Se nao for, o principalArtist pode (?) vir nulo e tudo como sugestao
-                    -> Caso seja assim, quebra alguam convencao ou norma?
-                - Provavelmente a API sempre retorna alguma sugestao
-
-                - Restricoes do Fetcher:
-                    -> TooManyChars
-             */
-        }
 
         final List<ArtistData> artistDataList = extractOnlyExactlyMatches(artists, artistName);
 
@@ -84,8 +58,7 @@ public class UserSearchService {
 
         final SearchArtistByNameDTO artist = searchArtistByName(name);
 
-        userAuthenticationService.processUserProfile();
-        final UserProfile updatedProfile = attachArtistToProfile(artist);
+        final UserProfile updatedProfile = attachArtistAndGenresToProfile(artist);
 
         userRepository.save(updatedProfile);
 
@@ -94,10 +67,11 @@ public class UserSearchService {
     }
 
 
-    public UserProfile attachArtistToProfile(@NotNull final SearchArtistByNameDTO artistFound){
+    private UserProfile attachArtistAndGenresToProfile(@NotNull final SearchArtistByNameDTO artistFound){
 
-        UserProfile userProf = userRepository.findUserProfileByEmail(userAuthenticationService.getCurrentUserEmail())
-                .orElseThrow(RuntimeException::new);
+        final UserProfile userProf = userRepository
+                .findUserProfileByEmail(userAuthenticationService.getCurrentUserEmail())
+                .orElseThrow(UserCannotBeFoundInDatabase::new);
 
         userProf.getMusicalArtists().add(artistFound.getFoundArtist().getName());
         userProf.getTop10Genres().addAll(artistFound.getGenres());
@@ -107,9 +81,6 @@ public class UserSearchService {
 
     private List<ArtistData> extractOnlyExactlyMatches(@NotNull final List<ArtistData> artistListSource,
                                                        @NotNull final String artistName){
-        /* TODO : remover ultimo arg. a nova versao do ArtistData carrega a tag de busca
-            Além de fazer este filtro, posso considerar que os demais resultados sao sugestoes.
-         */
 
         return artistListSource.stream()
                 .filter(artist -> artist.getName().contains(artistName))

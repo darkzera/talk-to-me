@@ -19,6 +19,8 @@ public class UserAuthenticationService {
     private UserRepository userRepository;
     @Autowired
     private SpotifyClientImplementation spotifyClientImplementation;
+
+    @Deprecated
     public String getCurrentUserEmail() {
         var token = SecurityContextHolder.getContext().getAuthentication().getCredentials();
         String email = ((Jwt)token).getClaims().get("email").toString();
@@ -29,6 +31,7 @@ public class UserAuthenticationService {
     // A cada vez que algum item for pesquisado p ser incluido é importante invocar o metodo abaixo
     // TODO: Verificar commit dc95cb4
     @Transactional
+    @Deprecated
     public UserProfile processUserProfile(){
 
         if (userRepository.existsByEmail(getCurrentUserEmail())) {
