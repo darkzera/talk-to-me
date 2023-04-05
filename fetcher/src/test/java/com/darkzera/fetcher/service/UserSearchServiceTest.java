@@ -1,12 +1,11 @@
 package com.darkzera.fetcher.service;
 
 import builder.ArtistDataBuilder;
-import com.darkzera.fetcher.config.SpotifyProvider;
+import com.darkzera.fetcher.service.client.provider.SpotifyProvider;
 import com.darkzera.fetcher.entity.UserProfile;
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import com.darkzera.fetcher.entity.enumerator.AuthSupplier;
 import com.darkzera.fetcher.repository.UserRepository;
-import com.darkzera.fetcher.service.client.SpotifyClient;
 import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
 import com.darkzera.fetcher.service.exception.UserCannotBeFoundInDatabase;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import se.michaelthelin.spotify.SpotifyApi;
-import se.michaelthelin.spotify.model_objects.specification.Artist;
 
 import java.util.*;
 

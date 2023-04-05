@@ -2,6 +2,8 @@ package builder;
 
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import org.mockito.internal.util.collections.Sets;
+import se.michaelthelin.spotify.model_objects.specification.Artist;
+import se.michaelthelin.spotify.model_objects.specification.Paging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class ArtistDataBuilder {
 
     private List<String> names = new ArrayList<>();
 
-    private final String ASSERT_DEFAULT_MSG = "Names list cannot be empty. Check implementation class";
+    private final String ASSERT_DEFAULT_MSG = "Given list cannot be empty. Check implementation class";
 
     private ArtistDataBuilder(String... name){
         if (name.length == 1) {
@@ -66,6 +68,28 @@ public class ArtistDataBuilder {
         }
 
         return artistDataList;
+    }
+
+    public Paging<Artist> buildRestrictedPaging(){
+        assertNotNull(ASSERT_DEFAULT_MSG, genres);
+        assertNotNull(ASSERT_DEFAULT_MSG, names);
+        assertEquals(ASSERT_DEFAULT_MSG, genres.size(), names.size());
+        Artist[] artistArr = new Artist[names.size()];
+
+
+        for (int i = 0; i < names.size() ; i++) {
+            artistArr[i] = new Artist.Builder()
+                    .setHref("http://fake." + names.get(i))
+                    .setName(names.get(i))
+                    .setGenres(genres.get(i))
+                    .setPopularity(7)
+                    .build();
+        }
+
+        return new Paging.Builder<Artist>()
+                .setHref("http://fake.pageable.net")
+                .setItems(artistArr)
+                .build();
     }
 
 }

@@ -1,6 +1,6 @@
 package com.darkzera.fetcher.service.client;
 
-import com.darkzera.fetcher.config.SpotifyProvider;
+import com.darkzera.fetcher.service.client.provider.SpotifyProvider;
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import org.springframework.stereotype.Service;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class SpotifyClientImplementation implements SpotifyClient {
 
-    private final SpotifyProvider spotifyProvider;
+    private SpotifyProvider spotifyProvider;
 
     public SpotifyClientImplementation(SpotifyProvider spotifyProvider) {
         this.spotifyProvider = spotifyProvider;

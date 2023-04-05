@@ -1,4 +1,4 @@
-package com.darkzera.fetcher.config;
+package com.darkzera.fetcher.service.client.provider;
 
 import lombok.Getter;
 import org.apache.hc.core5.http.ParseException;
