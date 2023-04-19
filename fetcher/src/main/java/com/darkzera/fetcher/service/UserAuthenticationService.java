@@ -6,10 +6,12 @@ import com.darkzera.fetcher.repository.UserRepository;
 import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Component
 public class UserAuthenticationService {
@@ -20,6 +22,10 @@ public class UserAuthenticationService {
     @Autowired
     private SpotifyClientImplementation spotifyClientImplementation;
 
+    public UserProfile getUserProfile(){
+        var principal = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findUserProfileByEmail(principal.getEmail()).orElseThrow(() -> new RuntimeException());
+    }
     @Deprecated
     public String getCurrentUserEmail() {
         var token = SecurityContextHolder.getContext().getAuthentication().getCredentials();
