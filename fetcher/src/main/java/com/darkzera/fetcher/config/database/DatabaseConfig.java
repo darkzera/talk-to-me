@@ -16,13 +16,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 
-@Configuration
+//@Configuration
 public class DatabaseConfig {
 
-    @Autowired
+//    @Autowired
     private Environment env;
 
-    @Bean
+//    @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
@@ -33,7 +33,7 @@ public class DatabaseConfig {
         return dataSource;
     }
 
-    @Bean
+//    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
@@ -59,6 +59,6 @@ public class DatabaseConfig {
 
 }
 
-@Configuration
+//@Configuration
 class SqliteConfig {
 }
