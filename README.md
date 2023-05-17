@@ -1,27 +1,18 @@
-Construcao de multiplos servicos utilizando Spring cloud.
-
 Vamos nos basear no repositorio **indicado** e construir cada um baseado na arquitetura abaixo
 
-1) RLS
-
-- [ ]  Idealizar produto
-- [ ]  Definir e criar o servico CORE e DEPOIS criar arquitetura ao redor
-- [ ]  Testar integracoes a servicos externos pode nao ser tao simples
-- [ ]  Reconstruir arquitetura das API REST(vamos tentar utilizar clean arch, vai ser chato. Talvez precise de alguma POC antes
-- [ ]  Gateway
-- [ ]  Autenticacao
-- [ ]  Naming-server
 
 ## Application CORE
 
+<div align=center>
 ## FETCHER SERVICE
 
-![Untitled](https://iili.io/HXkFCTg.png)
+![Untitled](https://i.ibb.co/Hhy76GT/talka.png)
+
 
 ## SCHEDULER SERVICE
 
 ![Untitled](https://iili.io/HXkGIVa.png)
-
+</div>
 ---
 
 - Comunicacao - assincrona
@@ -48,5 +39,4 @@ Vamos nos basear no repositorio **indicado** e construir cada um baseado na arqu
 -  Codigo assertivo: nomes de metodos respeitando convencoes, semantica e sintaxe.
 - Abstrair quando necessario
 - Comentarios inuteis
- - Imports com * ou nao utilizados
- - Codigo quebrado **APENAS EM BRANCHES AUXILIARES DE DESENVOLVIMENTO**
+- Codigo quebrado **APENAS EM BRANCHES AUXILIARES DE DEV**
