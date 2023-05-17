@@ -3,8 +3,6 @@ package com.darkzera.fetcher.service;
 import com.darkzera.fetcher.entity.UserProfile;
 import com.darkzera.fetcher.handler.DateHandler;
 import org.apache.hc.core5.http.HttpException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -25,7 +23,7 @@ public class IncludeAvailableSchedulerService {
 
     public List<?> includeAvailableDatesToSchedule(List<LocalDateTime> availableDateTime){
 
-        final var user = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        final var user = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         final UserProfile requestUser = authenticationService.getUserProfile();
 

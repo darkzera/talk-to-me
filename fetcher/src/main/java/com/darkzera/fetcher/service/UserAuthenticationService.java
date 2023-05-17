@@ -5,9 +5,6 @@ import com.darkzera.fetcher.entity.enumerator.AuthSupplier;
 import com.darkzera.fetcher.repository.UserRepository;
 import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -23,14 +20,13 @@ public class UserAuthenticationService {
     private SpotifyClientImplementation spotifyClientImplementation;
 
     public UserProfile getUserProfile(){
-        var principal = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserProfileByEmail(principal.getEmail()).orElseThrow(() -> new RuntimeException());
+//        var principal = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        return userRepository.findUserProfileByEmail(principal.getEmail()).orElseThrow(() -> new RuntimeException());
+        return processUserProfile();
     }
     @Deprecated
     public String getCurrentUserEmail() {
-        var token = SecurityContextHolder.getContext().getAuthentication().getCredentials();
-        String email = ((Jwt)token).getClaims().get("email").toString();
-        return email;
+        return "fakeMailer@net.com";
     }
 
     // Enquanto a gente nao consegue montar o service especializado para processar isso aqui enquanto autentica o login
@@ -46,7 +42,7 @@ public class UserAuthenticationService {
         }
 
         var userProfile = new UserProfile();
-        userProfile.setEmail(getCurrentUserEmail());
+        userProfile.setEmail("fakeMailer@net.com");
         userProfile.setAuthSupplier(AuthSupplier.GOOGLE);
 
         return userRepository.save(userProfile);

@@ -1,5 +1,7 @@
 package com.darkzera.fetcher.service.client;
 
+import com.darkzera.fetcher.entity.dto.SearchArtistByNameDTO;
+import com.darkzera.fetcher.service.ReorganizeArtistData;
 import com.darkzera.fetcher.service.client.provider.SpotifyProvider;
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import org.springframework.stereotype.Service;
@@ -17,18 +19,20 @@ public class SpotifyClientImplementation implements SpotifyClient {
 
     private SpotifyProvider spotifyProvider;
 
-    public SpotifyClientImplementation(SpotifyProvider spotifyProvider) {
+    private ReorganizeArtistData reorganizeArtistData;
+
+    public SpotifyClientImplementation(SpotifyProvider spotifyProvider,
+                                       ReorganizeArtistData reorganizeArtistData) {
         this.spotifyProvider = spotifyProvider;
+        this.reorganizeArtistData = reorganizeArtistData;
     }
 
     @Override
-    public List<ArtistData> findArtistByName(String artistName) {
-
+    public SearchArtistByNameDTO findArtistByName(String artistName) {
         final Paging<Artist> artistPageable = spotifyProvider.searchArtists(artistName);
         final List<ArtistData> artistDataList = new ArrayList<>();
 
         for (Artist a : artistPageable.getItems()) {
-
             artistDataList.add(ArtistData.builder()
                     .name(a.getName())
                     .externalLink(a.getHref())
@@ -36,7 +40,6 @@ public class SpotifyClientImplementation implements SpotifyClient {
                     .build());
         }
 
-        return artistDataList;
-
+        return reorganizeArtistData.rearrange(artistDataList, artistName);
     }
 }

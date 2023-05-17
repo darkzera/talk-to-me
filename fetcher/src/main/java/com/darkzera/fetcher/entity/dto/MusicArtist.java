@@ -2,7 +2,6 @@ package com.darkzera.fetcher.entity.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import net.minidev.json.annotate.JsonIgnore;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
 
 import javax.persistence.ElementCollection;

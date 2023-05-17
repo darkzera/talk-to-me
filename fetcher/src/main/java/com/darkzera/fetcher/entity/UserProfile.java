@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,15 +27,11 @@ public class UserProfile {
 
     @Enumerated(EnumType.STRING)
     private AuthSupplier authSupplier;
-
+    @Column(name = "topGenres")
     @ElementCollection
-    @CollectionTable(name = "top10Genres", joinColumns = @JoinColumn(name = "users"))
-    @Column(name = "valor")
-    private Set<String>top10Genres;
+    private Set<String>top10Genres = new HashSet<>();
 
-
+    @Column(name = "musicalArtists")
     @ElementCollection
-    @CollectionTable(name = "musicalArtists", joinColumns = @JoinColumn(name = "users"))
-    @Column(name = "valor")
-    private Set<String> musicalArtists;
+    private Set<String> musicalArtists = new HashSet<>();
 }

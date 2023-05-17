@@ -81,11 +81,10 @@ public class UserSearchServiceTest {
         var userProfile = buildDefaultUserProfile();
 
 
-        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
+//        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
 
-        when(userAuthenticationService.getCurrentUserEmail()).thenReturn(userProfile.getEmail());
+        when(userAuthenticationService.getUserProfile()).thenReturn(userProfile);
 
-        when(userRepository.findUserProfileByEmail(anyString())).thenReturn(Optional.of(userProfile));
         when(userRepository.save(any())).thenReturn(userProfile);
 
         var actualResult = userSearchService.includeMusicArtistInProfileByName("Sator Arepo");
@@ -114,7 +113,7 @@ public class UserSearchServiceTest {
         var userProfile = buildDefaultUserProfile();
 
 
-        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
+//        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
 
         when(userAuthenticationService.getCurrentUserEmail()).thenReturn(userProfile.getEmail());
 
@@ -138,7 +137,7 @@ public class UserSearchServiceTest {
         var userProfile = buildDefaultUserProfile();
 
 
-        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
+//        when(spotifyClientImplementation.findArtistByName(anyString())).thenReturn(artistFakeList_);
 
         when(userAuthenticationService.getCurrentUserEmail()).thenReturn(userProfile.getEmail());
 
