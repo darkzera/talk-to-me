@@ -1,7 +1,6 @@
 package com.darkzera.fetcher.service.client;
 
 import com.darkzera.fetcher.entity.dto.SearchArtistByNameDTO;
-import com.darkzera.fetcher.service.ReorganizeArtistData;
 import com.darkzera.fetcher.service.client.provider.SpotifyProvider;
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import org.springframework.stereotype.Service;

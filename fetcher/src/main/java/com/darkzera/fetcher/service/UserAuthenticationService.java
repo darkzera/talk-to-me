@@ -20,8 +20,10 @@ public class UserAuthenticationService {
     private SpotifyClientImplementation spotifyClientImplementation;
 
     public UserProfile getUserProfile(){
+
 //        var principal = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        return userRepository.findUserProfileByEmail(principal.getEmail()).orElseThrow(() -> new RuntimeException());
+
         return processUserProfile();
     }
     @Deprecated

@@ -12,15 +12,6 @@ import java.time.Clock;
 @ConfigurationProperties
 public class FetcherApplication {
 
-	/* TODO
-			- Fix DB q no final nao serviu p. mta coisa =)
-			- Tirei o OAUTH2 da google. Depois da att deles nao consegui mais usar o Postman
-			- Refatoracao da transformacao da resposta Spotify para o modelo de negocio.
-				: Agora num componente especialista ReorganizeArtistData.java
-
-	 */
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(FetcherApplication.class, args);
 

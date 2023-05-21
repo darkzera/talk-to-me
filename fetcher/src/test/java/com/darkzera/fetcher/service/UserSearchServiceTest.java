@@ -37,7 +37,6 @@ public class UserSearchServiceTest {
     @Mock
     private UserRepository userRepository;
 
-
     @Mock
     private SpotifyProvider spotifyProvider;
 

@@ -1,8 +1,8 @@
 package com.darkzera.fetcher.service;
 
-import builder.ArtistDataBuilder;
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import com.darkzera.fetcher.entity.dto.SearchArtistByNameDTO;
+import com.darkzera.fetcher.service.client.ReorganizeArtistData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +29,11 @@ class ReorganizeArtistDataTest {
 
     @Test
     void t1(){
+        /*
+            -> Explorar mais com teste parametrizavel.
+                 Com certeza um bom testecase encontraria inconsistencias na impl.
+         */
+
         List<ArtistData> rawSpotifyResult = Arrays.asList(
                 ArtistData.builder().name("Black Sabbath").genres(Set.of("Metal", "Grind metal")).build(),
                 ArtistData.builder().name("Black Sabbath Reborno").genres(Set.of("Comics metal", "Grind metal", "wtf")).build(),
@@ -50,6 +55,8 @@ class ReorganizeArtistDataTest {
 
 
         assertNotNull(actual);
+        System.out.println(actual);
+        System.out.println(expected);
 
         assertEquals(expected.getFoundArtist(), actual.getFoundArtist());
 

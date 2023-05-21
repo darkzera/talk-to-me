@@ -22,6 +22,14 @@ public class SearchArtistByNameDTO {
     private Set<String> genres = new HashSet<>();
     public SearchArtistByNameDTO(){}
 
+    public SearchArtistByNameDTO(Set<String> genres){
+       this.genres.addAll(genres);
+    }
+
+    public SearchArtistByNameDTO(ArtistData responseData){
+        this.genres.addAll(responseData.getGenres());
+        this.queryName = responseData.getName();
+    }
     public String getQueryName(){
         return foundArtist.getName();
     }

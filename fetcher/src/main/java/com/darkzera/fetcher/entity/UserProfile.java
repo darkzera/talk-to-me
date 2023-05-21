@@ -1,6 +1,7 @@
 package com.darkzera.fetcher.entity;
 
 import com.darkzera.fetcher.entity.enumerator.AuthSupplier;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -34,4 +36,12 @@ public class UserProfile {
     @Column(name = "musicalArtists")
     @ElementCollection
     private Set<String> musicalArtists = new HashSet<>();
+
+    public boolean addNewMusicalArtist(final @NotNull String artistName){
+        return musicalArtists.add(artistName);
+    }
+
+    public boolean addNewSetOfGenres(final @NotNull Set<String> genres){
+       return this.top10Genres.addAll(genres);
+    }
 }

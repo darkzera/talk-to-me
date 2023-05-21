@@ -1,20 +1,15 @@
-package com.darkzera.fetcher.service;
+package com.darkzera.fetcher.service.client;
 
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import com.darkzera.fetcher.entity.dto.SearchArtistByNameDTO;
 import com.sun.istack.NotNull;
-import org.apache.hc.core5.http.HttpException;
-import org.apache.hc.core5.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 public class ReorganizeArtistData {
-
 
     public SearchArtistByNameDTO rearrange(@NotNull final List<ArtistData> artistDataList,
                                            @NotNull final String artistName) {

@@ -23,8 +23,6 @@ public class IncludeAvailableSchedulerService {
 
     public List<?> includeAvailableDatesToSchedule(List<LocalDateTime> availableDateTime){
 
-//        final var user = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         final UserProfile requestUser = authenticationService.getUserProfile();
 
         final List<?> validDates = dateHandler.removeFromThePast(availableDateTime);
@@ -32,10 +30,6 @@ public class IncludeAvailableSchedulerService {
         if (validDates.isEmpty()){
             throw new RuntimeException("Nao fio");
         }
-
-
-
-
 
 
 

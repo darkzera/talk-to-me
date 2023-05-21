@@ -28,8 +28,6 @@ public class UserSearchController {
 
     @GetMapping("/includeMusicArtist/{name}")
     public ResponseEntity<?> includeMusicArtistByName(@PathVariable String name){
-//        var t = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         var response = userSearchService.includeMusicArtistInProfileByName(name);
 
         return ResponseEntity.ok(response);
