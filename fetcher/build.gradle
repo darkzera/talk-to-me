@@ -26,36 +26,26 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'se.michaelthelin.spotify:spotify-web-api-java:8.0.0'
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	implementation 'de.u-mass:lastfm-java:0.1.2'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation group: 'org.springframework.security', name: 'spring-security-core'
 	implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.16.1'
 	implementation 'org.hibernate:hibernate-core:5.5.7.Final'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	implementation 'org.springframework.security:spring-security-oauth2-client:5.7.6'
-//	implementation 'org.springframework.security:spring-security-oauth2-core:5.7.7'
-//	implementation 'org.springframework.security:spring-security-oauth2-jose:5.7.7'
-//	implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.7.7'
-//	implementation "org.springframework.cloud:spring-cloud-config-client"
-
-//	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.7.7'
-//	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server', version: '5.7.7'
-//	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.9'
-
-//	implementation 'org.springframework.security:spring-security-config:5.7.7'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+//	implementation 'org.springframework.security.oauth:spring-security-oauth2-client'
+	implementation 'org.springframework.security:spring-security-oauth2-client'
 
 	runtimeOnly 'com.h2database:h2:1.4.200'
-
 }
 
 dependencyManagement {
