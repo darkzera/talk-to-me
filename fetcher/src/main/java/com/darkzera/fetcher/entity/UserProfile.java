@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,11 +39,19 @@ public class UserProfile {
     @ElementCollection
     private Set<String> musicalArtists = new HashSet<>();
 
+    @Column(name = "availableIn")
+    @ElementCollection
+    private Set<LocalDateTime> availableIn = new HashSet<>();
+
     public boolean addNewMusicalArtist(final @NotNull String artistName){
         return musicalArtists.add(artistName);
     }
 
     public boolean addNewSetOfGenres(final @NotNull Set<String> genres){
        return this.top10Genres.addAll(genres);
+    }
+
+    public boolean includeAvailableTimes(final @NotNull Set<LocalDateTime> t){
+        return availableIn.addAll(t);
     }
 }

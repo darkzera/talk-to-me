@@ -1,9 +1,7 @@
 package com.darkzera.fetcher.service.client;
 
 import builder.ArtistDataBuilder;
-import com.darkzera.fetcher.entity.dto.ArtistData;
 import com.darkzera.fetcher.service.client.provider.SpotifyProvider;
-import com.sun.istack.NotNull;
 import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,24 +11,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
 import se.michaelthelin.spotify.model_objects.specification.Paging;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SpotifyClientImplementationTest {
 
     @InjectMocks
-    private SpotifyClientImplementation spotifyClientImplementation;
+    private SpotifyClient spotifyClient;
 
     @Mock
     private SpotifyProvider spotifyProvider;

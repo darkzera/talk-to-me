@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
@@ -21,11 +22,11 @@ public class DateHandler {
         this.clock = clock;
     }
 
-    public List<LocalDateTime> removeFromThePast(Collection<LocalDateTime> dates){
+    public Collection<LocalDateTime> removeFromThePast(Collection<LocalDateTime> dates){
 
         return dates.stream()
                 .filter(date -> date.isAfter(LocalDateTime.now(clock)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
     }
 

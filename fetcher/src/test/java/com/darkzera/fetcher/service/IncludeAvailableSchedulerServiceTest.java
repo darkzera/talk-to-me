@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -45,7 +46,7 @@ class IncludeAvailableSchedulerServiceTest {
 
         when(dateHandler.removeFromThePast(any())).thenReturn(datesToSchedule);
 
-        includeAvailableTimesService.includeAvailableDatesToSchedule(datesToSchedule);
+        includeAvailableTimesService.includeAvailableDatesToSchedule(datesToSchedule.stream().collect(Collectors.toSet()));
 
 
     }

@@ -6,7 +6,7 @@ import com.darkzera.fetcher.entity.UserProfile;
 import com.darkzera.fetcher.entity.dto.ArtistData;
 import com.darkzera.fetcher.entity.enumerator.AuthSupplier;
 import com.darkzera.fetcher.repository.UserRepository;
-import com.darkzera.fetcher.service.client.SpotifyClientImplementation;
+import com.darkzera.fetcher.service.client.SpotifyClient;
 import com.darkzera.fetcher.service.exception.UserCannotBeFoundInDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -41,7 +41,7 @@ public class UserSearchServiceTest {
     private SpotifyProvider spotifyProvider;
 
     @Mock
-    private SpotifyClientImplementation spotifyClientImplementation;
+    private SpotifyClient spotifyClient;
 
     @Mock
     private UserAuthenticationService userAuthenticationService;

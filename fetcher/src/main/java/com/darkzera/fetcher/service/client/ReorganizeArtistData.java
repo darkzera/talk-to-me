@@ -31,6 +31,7 @@ public class ReorganizeArtistData {
         }
 
         validMatches.remove(builded.getFoundArtist());
+
         builded.setSuggestions(validMatches);
         builded.setQueryName(builded.getFoundArtist().getName());
 
